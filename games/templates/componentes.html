@@ -1,0 +1,130 @@
+{% extends 'base.html' %} {% block content %}
+<div
+  class="content-header"
+  style="
+    text-align: center;
+    margin-top: 15% !important;
+    color: rgb(245, 245, 247);
+    direction: ltr;
+    display: block;
+    flex-shrink: 1;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 32px;
+  "
+>
+  <h1>Atributos de Juegos</h1>
+  <p class="lema">
+    Explora mundos virtuales llenos de emoción y desafío: descubre la magia de
+    cada juego a través de sus desarrolladores, géneros, jugadores y fechas de
+    lanzamiento.
+  </p>
+</div>
+
+<!-- Barra de búsqueda -->
+<div class="search-bar" style="text-align: center">
+  <form id="search-form">
+    <label for="search-input" style="color: white">Buscar:</label>
+    <input
+      type="text"
+      id="search-input"
+      oninput="searchCards()"
+      placeholder="Ingrese término de búsqueda"
+    />
+  </form>
+</div>
+
+<!-- Tabla -->
+<div class="table-container" style="margin-top: 20px">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Desarrollador</th>
+        <th>Juego</th>
+        <th>Género</th>
+        <th>Mas Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for juego in juegos %}
+      <tr>
+        <td>{{ juego.desarrollador.nombre }}</td>
+        <td>{{ juego.titulo }}</td>
+        <td>{{ juego.genero.nombre }}</td>
+        <td class="jugadores">Jugadores:{{ juego.jugadores.cantidad }}</td>
+        <td class="fecha">Fecha:{{ juego.lanzamiento }}</td>
+        <td>
+          <button class="ver-mas">Ver más</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  $(document).ready(function () {
+    // Oculta los elementos jugadores y fecha al cargar la página
+    $('.jugadores, .fecha').hide();
+
+    // Maneja el clic en el botón "Ver más"
+    $('.ver-mas').click(function () {
+      // Encuentra los elementos hermanos de la fila actual
+      var jugadores = $(this).closest('tr').find('.jugadores');
+      var fecha = $(this).closest('tr').find('.fecha');
+
+      // Muestra u oculta los elementos
+      jugadores.toggle();
+      fecha.toggle();
+    });
+  });
+</script>
+
+<!-- Script para la gráfica -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Estilos CSS -->
+<style>
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+  .content-header {
+    text-align: center;
+    margin-top: 5%;
+  }
+
+  .btn-primary {
+    margin-left: 43% !important;
+    margin-right: 44% !important;
+  }
+
+  .lema {
+    font-size: 28px;
+    margin: 100px 10% !important;
+  }
+
+  .chart-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .search-bar {
+    text-align: center;
+  }
+
+  .table-container {
+    text-align: center;
+  }
+
+  table {
+    width: 70%; /* Ajusta según sea necesario */
+    margin: 0 auto; /* Centra la tabla */
+    margin-top: 20px;
+  }
+</style>
+
+{% endblock %}
